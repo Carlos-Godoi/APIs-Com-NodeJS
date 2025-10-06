@@ -1,0 +1,29 @@
+{
+  "name": "api-pessoas",
+  "version": "1.0.0",
+  "description": "API para gerenciar pessoas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carlos-Godoi/APIs-Com-NodeJS.git"
+  },
+  "keywords": [
+    "crud",
+    "API",
+    "express",
+    "nodemon"
+  ],
+  "author": "Carlos Godoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Carlos-Godoi/APIs-Com-NodeJS/issues"
+  },
+  "homepage": "https://github.com/Carlos-Godoi/APIs-Com-NodeJS#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
