@@ -4,6 +4,9 @@ const express = require('express');
 // Cria uma instância di aplicativo Express
 const app = express();
 
+// Ter acesso ao body (json) nas requisições POST, PUT E PATCH
+app.use(express.json());
+
 // Vetor de pessoas com código, nome, idade e cidade
 let pessoas = [
   { "codigo": 1, "nome": "Ana Souza", "idade": 28, "cidade": "São Paulo" },
@@ -39,6 +42,10 @@ app.get('/:codigo', (req, res) => {
     }
 });
 
+// Rota para cadastrar pessoas
+app.post('/', (req, res) => {
+    res.json(req.body);
+});
 
 // Executa o projeto na porta especificada
 app.listen(8080, () => {
