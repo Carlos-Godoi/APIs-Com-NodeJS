@@ -20,7 +20,7 @@ let pessoas = [
 
 // Define uma rota GET para o caminho raiz ('/')
 app.get('/', (req, res) => {
-    res.json(pessoas);
+    res.status(200).json(pessoas);
 });
 
 // Rota para exibir uma pessoa específica através do código
@@ -33,9 +33,9 @@ app.get('/:codigo', (req, res) => {
 
     // Exibir pessoa
     if(pessoa){
-        res.json(pessoa);
+        res.status(200).json(pessoa);
     } else {
-        res.json({mensagem: 'Pessoa não encontrada.'});
+        res.status(404).json({mensagem: 'Pessoa não encontrada.'});
     }
 });
 
