@@ -21,6 +21,9 @@ let pessoas = [
   { "codigo": 10, "nome": "João Pedro Ramos", "idade": 33, "cidade": "Natal" }
 ];
 
+// Índece cadastro
+let indiceCadastro = 11;
+
 // Define uma rota GET para o caminho raiz ('/')
 app.get('/', (req, res) => {
     res.status(200).json(pessoas);
@@ -44,7 +47,31 @@ app.get('/:codigo', (req, res) => {
 
 // Rota para cadastrar pessoas
 app.post('/', (req, res) => {
-    res.json(req.body);
+    // Extrair as características do objeto
+    const { nome, idade, cidade } = req.body;
+
+    // Caso o nome, idade ou cidade não sejam informados, retorna um status 400
+    if(!nome || !idade || !cidade) {
+        return res.status(400).json({ mensagem: "Nome, idade e cidade são obrigatórios." });
+    }
+
+    // Criar nova pessoa
+    const novaPessoa = {
+        codigo: indiceCadastro,
+        nome,
+        idade,
+        cidade
+    };
+
+    // Incrementar variável indiceCadastro
+    indiceCadastro++;
+
+    // Adicionar ao vetor
+    pessoas.push(novaPessoa);
+
+    // Retornar a nova pessoa
+    res.status(201).json(novaPessoa);
+
 });
 
 // Executa o projeto na porta especificada
