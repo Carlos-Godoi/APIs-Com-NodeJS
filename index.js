@@ -132,6 +132,26 @@ app.patch('/:codigo', (req, res) => {
     res.status(200).json(pessoa);
 });
 
+// Rota DELETE - Remover pessoa pelo código
+app.delete('/:codigo', (req, res) => {
+    // Extrair o código enviado via parâmetro
+    const codigo = parseInt(req.params.codigo);
+
+    // Localizar o índice da pessoa com o código recebido via parâmetro
+    const indicePessoa = pessoas.findIndex(p => p.codigo === codigo);
+
+    // Caso não encontre a pessoa
+    if(indicePessoa == -1) {
+        return res.status(404).json({ mensagem: 'Pessoa não encontrada.' });
+    }
+
+    // Remover pessoa
+    pessoas.splice(indicePessoa, 1);
+
+    // Retornar mensagem, informando que a pessoa foi removida
+    res.status(200).json({ mensagem: 'Pessoa removida com sucesso!' });
+});
+
 // Executa o projeto na porta especificada
 app.listen(8080, () => {
     console.log('Servidor rodando em http://localhost:8080');
