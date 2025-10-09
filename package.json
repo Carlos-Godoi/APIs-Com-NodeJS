@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Carlos-Godoi/APIs-Com-NodeJS#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "nodemon": "^3.1.10"
   }

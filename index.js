@@ -1,8 +1,14 @@
 // Importar o módulo Express para usar suas funcionalidades
 const express = require('express');
 
+// Importar módulo de CORS
+const cors = require('cors');
+
 // Cria uma instância di aplicativo Express
 const app = express();
+
+// Adicionar o módulo de CORS em nossa aplicação
+app.use(cors());
 
 // Importa as rotas definidas em pessoa.js
 const pessoaRouter = require('./rotas/pessoa');
@@ -17,3 +23,4 @@ app.use(express.json());
 app.listen(8080, () => {
     console.log('Servidor rodando em http://localhost:8080');
 });
+  
