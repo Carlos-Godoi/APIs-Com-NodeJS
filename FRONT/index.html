@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de pessoas - CRUD</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <section id="form-section">
+        <form id="formPessoa">
+            <input type="text" id="nome" placeholder="Nome" required />
+            <input type="number" id="idade" placeholder="Idade" required />
+            <input type="text" id="cidade" placeholder="Cidade" required />
+            <button type="submit">Cadastrar</button>
+        </form>
+    </section>
+
+    <section id="lista-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Cidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaPessoas"></tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
