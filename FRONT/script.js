@@ -1,3 +1,4 @@
+
 // URL da API
 const API_URL = 'http://localhost:8080/pessoa';
 
@@ -7,14 +8,14 @@ window.onload = () => {
 };
 
 // Listar pessoas
-function carregarPessoas(){
+function carregarPessoas() {
     fetch(API_URL)
-    .then(res => res.json())
-    .then(pessoas => {
-        const tabela = document.getElementById('tabelaPessoas');
-        tabela.innerHTML = '';
-        pessoas.forEach(pessoa => {
-            tabela.innerHTML += `
+        .then(res => res.json())
+        .then(pessoas => {
+            const tabela = document.getElementById('tabelaPessoas');
+            tabela.innerHTML = '';
+            pessoas.forEach(pessoa => {
+                tabela.innerHTML += `
             <tr>
             <td>${pessoa.codigo}</td>
             <td>${pessoa.nome}</td>
@@ -26,15 +27,15 @@ function carregarPessoas(){
             </td>
             </tr>
             `;
+            });
         });
-    });
 }
 
 // Cadastrar nova pessoa
 document.getElementById('formPessoa').addEventListener('submit', e => {
     e.preventDefault();
 
-    const nome = document.getElementById('nome').value; 
+    const nome = document.getElementById('nome').value;
     const idade = document.getElementById('idade').value;
     const cidade = document.getElementById('cidade').value;
 
@@ -43,18 +44,39 @@ document.getElementById('formPessoa').addEventListener('submit', e => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, idade, cidade })
     })
-    .then(res => res.json())
-    .then(() => {
-        e.target.reset();
-        carregarPessoas();
-    });
+
+        .then(res => {
+            if (!res.ok) {
+                // ... (seu código de tratamento de erro ok)
+            }
+
+            // 💡 ADICIONE A VERIFICAÇÃO DO CABEÇALHO Content-Length
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                // Apenas tenta ler como JSON se o header indicar que é JSON
+                return res.json();
+            }
+            // Caso contrário, apenas retorne a resposta vazia ou ignore
+            return {}; // Retorna um objeto vazio para o próximo .then
+        })
+        .then(data => {
+            // Agora, mesmo que a API não retorne dados (apenas um 201 ou 204),
+            // a função segue, o form é resetado e a lista é recarregada.
+            e.target.reset();
+            carregarPessoas();
+        })
+        .catch(error => {
+            // Aqui você captura tanto o SyntaxErro original
+            // quando o novo erro lançado no bloco 'if (!res.ok)'
+            console.log('Erro ao cadastrar pessoa:', error.message);
+        });
 });
 
 // Deletar pessoa
 function removerPessoa(codigo) {
     if (confirm('Deseja realmente excluir esta pessoa?')) {
-        fetch(`${API_URL}/${codigo}`, { method: 'DELETE'})
-        .then(() => carregarPessoas());
+        fetch(`${API_URL}/${codigo}`, { method: 'DELETE' })
+            .then(() => carregarPessoas());
     }
 }
 
@@ -82,27 +104,27 @@ function editarPessoa(codigo) {
     if (Object.keys(dadosAtualizados).length > 0) {
         fetch(`${API_URL}/${codigo}`, {
             method: 'PATCH', // Ou 'PUT', dependendo da sua API
-            headers: { 
-                'Content-Type': 'application/json' 
+            headers: {
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(dadosAtualizados)
         })
-        .then(res => {
-            if (!res.ok) {
-                // Tratar erro da API, se a resposta não for 2xx
-                console.error('Erro ao atualizar pessoa:', res.statusText);
-                alert('Ocorreu um erro ao atualizar. Verifique o console.');
-            }
-            return res.json();
-        })
-        .then(() => {
-            alert('Pessoa atualizada com sucesso!');
-            carregarPessoas(); // Recarrega a lista para mostrar a alteração
-        })
-        .catch(error => {
-            console.error('Erro na requisição PATCH:', error);
-            alert('Erro de conexão ou requisição.');
-        });
+            .then(res => {
+                if (!res.ok) {
+                    // Tratar erro da API, se a resposta não for 2xx
+                    console.error('Erro ao atualizar pessoa:', res.statusText);
+                    alert('Ocorreu um erro ao atualizar. Verifique o console.');
+                }
+                return res.json();
+            })
+            .then(() => {
+                alert('Pessoa atualizada com sucesso!');
+                carregarPessoas(); // Recarrega a lista para mostrar a alteração
+            })
+            .catch(error => {
+                console.error('Erro na requisição PATCH:', error);
+                alert('Erro de conexão ou requisição.');
+            });
     } else {
         alert('Nenhum dado foi alterado.');
     }

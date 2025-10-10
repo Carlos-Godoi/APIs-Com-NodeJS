@@ -1,5 +1,15 @@
-// Importar o Express
+// No SEU CÓDIGO DO SERVIDOR Node.js
 const express = require('express');
+
+const app = express();
+
+const cors = require('cors'); // Importar CORS
+
+// Permite todas as requisições de qualquer origem (ideal para desenvolvimento)
+app.use(cors()); 
+
+// Permite que o servidor leia o JSON enviado no 'body' da requisição POST
+app.use(express.json());
 
 // Criar o objeto router, responsável por gerenciar nossas rotas
 const router = express.Router();
@@ -150,6 +160,13 @@ router.delete('/:codigo', (req, res) => {
     res.status(200).json({ mensagem: 'Pessoa removida com sucesso!' });
 });
 
+// O aplicativo Express DEVE usar o módulo de rotas (o router)
+app.use('/pessoa', router); // Associa o módulo de rotas ao caminho base /pessoa
 
-// Exportar rotas
-module.exports = router;
+// Define a porta onde o servidor irá ouvir
+const PORT = 8080; // A mesma porta usada no seu frontend (API_URL)
+
+// Inicia o servidor e escuta na porta definida
+app.listen(PORT, () => {
+    console.log(`Servidor rodando em http://localhost:${8080}`);
+});
