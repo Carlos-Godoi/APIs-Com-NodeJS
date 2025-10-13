@@ -15,6 +15,11 @@ app.use(cors());
 
 // Importa as rotas definidas em pessoa.js
 const pessoaRouter = require('./rotas/pessoa');
+const pessoaMongoRouter = require('./rotas/pessoaMongo');
+
+// // Usa o router difinido para o caminho "/pessoa"
+// app.use('/pessoa', pessoaRouter);
+app.use('/pessoaMongo', pessoaMongoRouter);
 
 // Ter acesso ao body (json) nas requisições POST, PUT E PATCH
 app.use(express.json());
