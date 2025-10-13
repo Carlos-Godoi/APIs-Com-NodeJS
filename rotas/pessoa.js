@@ -3,7 +3,8 @@ const express = require('express');
 
 const app = express();
 
-const cors = require('cors'); // Importar CORS
+// Importar CORS
+const cors = require('cors'); 
 
 // Permite todas as requisições de qualquer origem (ideal para desenvolvimento)
 app.use(cors()); 
